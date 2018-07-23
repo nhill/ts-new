@@ -18,12 +18,16 @@ export const fetchJobs = (region, query, callback) => async (dispatch) => {
   }
 };
 
-const buildPlacesURL = (region, query) => {
+const buildPlacesURL = (region, query, raduis) => {
+  if(!radius){
+    radius = 2000;
+  }
+
   const qs = stringify({
     key: googleApiKey,
     input: query,
     inputtype: 'textquery',
-    locationbias: region.lat+','+region.lng,
+    locationbias: 'circle:'+radius+'@'+region.lat+','+region.lng,
     fields: 'photos,formatted_address,name,rating,opening_hours,geometry'
   });
 

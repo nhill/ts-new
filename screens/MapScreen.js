@@ -47,6 +47,8 @@ class MapScreen extends Component {
   }
 
   onButtonPress = () => {
+    // popup then find places
+
     this.props.fetchPlaces(this.state.region, () => {
       this.props.navigation.navigate('places');
     });
