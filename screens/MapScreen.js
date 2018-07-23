@@ -23,7 +23,23 @@ class MapScreen extends Component {
   };
 
   componentDidMount() {
-      this.setState({mapLoaded: true});
+    this.setState({mapLoaded: true});
+      navigator.geolocation.getCurrentPosition(
+       (position) => {
+         console.log(position);
+         this.setState({
+           region: {
+             latitude: position.coords.latitude,
+             longitude: position.coords.longitude,
+             longitudeDelta: 0.04,
+             latitudeDelta: 0.09
+           },
+           mapLoaded: true
+         });
+       },
+       (error) => this.setState({ error: error.message }),
+       { enableHighAccuracy: true, timeout: 200000, maximumAge: 1000 },
+     );
   }
 
   onRegionChangeComplete = (region) => {
@@ -31,7 +47,9 @@ class MapScreen extends Component {
   }
 
   onButtonPress = () => {
-
+    this.props.fetchPlaces(this.state.region, () => {
+      this.props.navigation.navigate('places');
+    });
   }
 
   render() {
@@ -66,6 +84,6 @@ const styles = {
 };
 
 
-export default connect(null, [])(MapScreen);
+export default connect(null, actions)(MapScreen);
 
 // 4201738803816157 -- Indeed API key
