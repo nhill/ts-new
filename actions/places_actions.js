@@ -2,6 +2,7 @@ import axios from 'axios';
 import { dispatch } from 'react-redux';
 import  reverseGeocode from 'latlng-to-zip';
 import { stringify } from 'qs';
+import keys from '../config/keys';
 
 import {
   FETCH_PLACES
@@ -24,7 +25,7 @@ const buildPlacesURL = (region, query, raduis) => {
   }
 
   const qs = stringify({
-    key: googleApiKey,
+    key: keys.googleApiKey,
     input: query,
     inputtype: 'textquery',
     locationbias: 'circle:'+radius+'@'+region.lat+','+region.lng,

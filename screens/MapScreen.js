@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator, Platform } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { MapView, AppLoading } from 'expo';
 import { connect } from 'react-redux';
+import actions from '../actions/index'
 
 class MapScreen extends Component {
   static navigationOptions = {
