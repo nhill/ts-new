@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, Platform } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Button, Icon, Input } from 'react-native-elements';
 import { MapView, AppLoading } from 'expo';
+import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
 import { connect } from 'react-redux';
-import actions from '../actions/index'
+import actions from '../actions/index';
 
 class MapScreen extends Component {
   static navigationOptions = {
@@ -12,6 +13,8 @@ class MapScreen extends Component {
         return <Icon name="my-location" size={30} color={tintColor} />
     }
   };
+
+  //const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 
   state = {
     region: {
@@ -47,12 +50,14 @@ class MapScreen extends Component {
     this.setState({ region });
   }
 
-  onButtonPress = () => {
-    // popup then find places
-
+  onPlacesButtonPress = () => {
     this.props.fetchPlaces(this.state.region, () => {
       this.props.navigation.navigate('places');
     });
+  }
+
+  onButtonPress = () => {
+    this.popupDialog.show();
   }
 
   render() {
@@ -71,6 +76,17 @@ class MapScreen extends Component {
         />
         <View style={styles.buttonContainer}>
           <Button large title="Search This Area" backgroundColor="#009688" icon={{ name: 'search' }} onPress={this.onButtonPress} />
+        </View>
+        <View>
+          <PopupDialog
+            ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+            dialogTitle={<DialogTitle title="Search This Area" />}
+          >
+            <View>
+              <Input placeholder="What are you looking for?" />
+              <Button large title="Go" backgroundColor="#009688" icon={{ name: 'search' }} onPress={this.onPlacesButtonPress} />
+            </View>
+          </PopupDialog>
         </View>
       </View>
     );

@@ -8,7 +8,7 @@ import {
   FETCH_PLACES
 } from './types';
 
-export const fetchJobs = (region, query, callback) => async (dispatch) => {
+export const fetchPlaces = (region, query, callback) => async (dispatch) => {
   try{
     // data is contained in response.data so deconstruct
     let { data } = await axios.get(buildPlacesURL(region, query));
