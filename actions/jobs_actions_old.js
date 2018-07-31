@@ -15,6 +15,7 @@ export const fetchJobs = (region, callback) => async (dispatch) => {
 
     // data is contained in response.data so deconstruct
     let { data } = await axios.get(buildJobsURL(zip));
+    console.log(data);
     dispatch({ type: FETCH_JOBS, payload: data });
     callback();
   }catch(e){

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, Platform } from 'react-native';
-import { Button, Icon, Input } from 'react-native-elements';
+import { View, Text, TextInput, ActivityIndicator, Platform } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 import { MapView, AppLoading } from 'expo';
-import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
+import { DialogComponent }from 'react-native-dialog-component';
 import { connect } from 'react-redux';
-import actions from '../actions/index';
+import * as actions from '../actions';
 
 class MapScreen extends Component {
   static navigationOptions = {
@@ -14,7 +14,6 @@ class MapScreen extends Component {
     }
   };
 
-  //const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 
   state = {
     region: {
@@ -28,6 +27,7 @@ class MapScreen extends Component {
 
   componentDidMount() {
     this.setState({mapLoaded: true});
+    /*
       navigator.geolocation.getCurrentPosition(
        (position) => {
          console.log(position);
@@ -44,6 +44,7 @@ class MapScreen extends Component {
        (error) => this.setState({ error: error.message }),
        { enableHighAccuracy: true, timeout: 200000, maximumAge: 1000 },
      );
+     */
   }
 
   onRegionChangeComplete = (region) => {
@@ -51,13 +52,13 @@ class MapScreen extends Component {
   }
 
   onPlacesButtonPress = () => {
-    this.props.fetchPlaces(this.state.region, () => {
+    this.props.fetchPlaces( this.state.region, this.state.text, () => {
       this.props.navigation.navigate('places');
     });
   }
 
   onButtonPress = () => {
-    this.popupDialog.show();
+    this.dialogComponent.show();
   }
 
   render() {
@@ -75,18 +76,26 @@ class MapScreen extends Component {
           style={{ flex:1 }}
         />
         <View style={styles.buttonContainer}>
-          <Button large title="Search This Area" backgroundColor="#009688" icon={{ name: 'search' }} onPress={this.onButtonPress} />
+          <TextInput
+                 style={{ height: 40, marginBottom: 10, width: '80%' }}
+                 onChangeText={(text) => this.setState({text})}
+                 value={this.state.text}
+               />
+          <Button large title="Search This Area" backgroundColor="#009688" icon={{ name: 'search' }} onPress={this.onPlacesButtonPress} style={{marginBottom: 10}} />
         </View>
         <View>
-          <PopupDialog
-            ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-            dialogTitle={<DialogTitle title="Search This Area" />}
+          <DialogComponent
+            ref={(dialogComponent) => { this.dialogComponent = dialogComponent; }}
           >
             <View>
-              <Input placeholder="What are you looking for?" />
+              <TextInput
+                     style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                     onChangeText={(text) => this.setState({text})}
+                     value={this.state.text}
+                   />
               <Button large title="Go" backgroundColor="#009688" icon={{ name: 'search' }} onPress={this.onPlacesButtonPress} />
             </View>
-          </PopupDialog>
+          </DialogComponent>
         </View>
       </View>
     );
@@ -96,9 +105,10 @@ class MapScreen extends Component {
 const styles = {
   buttonContainer: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    backgroundColor: '#fff'
   }
 };
 

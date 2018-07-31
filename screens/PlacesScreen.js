@@ -1,8 +1,10 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
+import { View, ScrollView, StyleSheet } from 'react-native';
+import { Card, Button, Icon, List, ListItem } from 'react-native-elements';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
 
-export default class LinksScreen extends React.Component {
+class PlacesScreen extends React.Component {
   static navigationOptions = {
     title: 'Links',
   };
@@ -11,16 +13,32 @@ export default class LinksScreen extends React.Component {
 
   }
 
-  searchForPlace() {
-    axios.get('')
-  }
+  renderPlaces() {
+    if(this.state.places){
+      return (
+        <List containerStyle={{marginBottom: 20}}>
+          {
+          this.state.places.map((item, i) => {
+          return (<ListItem
+            roundAvatar
+            avatar={{uri:item.icon}}
+            key={i}
+            title={item.name}
+            subtitle={item.rating}
+          />);
+        })
+        }
+      </List>
+      );
+    }else{
+      // render empty message
+    }
+ }
 
   render() {
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <Button large title="Search For " backgroundColor="#009688" icon={{ name: 'search' }} onPress={this.searchForPlace} />
-        </View>
+        {this.renderPlaces()}
       </ScrollView>
     );
   }
@@ -33,3 +51,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+function mapStateToProps({ places }){
+  return { places: (places.places.candidates)?places.places.candidates:places.results };
+}
+
+export default connect(mapStateToProps, actions)(PlacesScreen);

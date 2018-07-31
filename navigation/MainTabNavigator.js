@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import MapScreen from '../screens/MapScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import PlacesScreen from '../screens/PlacesScreen';
 
 const HomeStack = createStackNavigator({
   Home: MapScreen,

@@ -1,3 +1,3 @@
 export const keys = {
-  googleApiKey: ''
+  googleApiKey: 'AIzaSyDMxscLWvAsGJJk7iJ1TgRmbYFbUmao-Gc'
 };
