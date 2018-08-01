@@ -20,10 +20,10 @@ class PlacesScreen extends Component {
 
   }
 
-  onItemChecked() {
+  onItemChecked(e) {
     this.setState(prevState => {
         const checkboxes = [...prevState.checkboxes];
-        checkboxes[i] = !checkboxes[i];
+        checkboxes[e.target.key] = !checkboxes[e.target.key];
         return {checkboxes};
     });
   }
@@ -34,11 +34,6 @@ class PlacesScreen extends Component {
         <List containerStyle={{marginBottom: 20}}>
           {
           this.props.places.map((item, i) => {
-            this.setState(prevState => {
-                const checkboxes = [...prevState.checkboxes];
-                checkboxes[i] = false;
-                return {checkboxes};
-            });
 
             return (<ListItem
               roundAvatar
@@ -46,7 +41,7 @@ class PlacesScreen extends Component {
               key={i}
               title={<CheckBox
                   title={item.name}
-                  onPress={this.onItemChecked}
+                  onPress={this.onItemChecked.bind(this)}
                   checked={this.state.checkboxes[i]}
                 />}
               subtitle={this.getRating(item.rating)}
