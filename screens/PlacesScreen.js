@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Card, Button, Icon, List, ListItem } from 'react-native-elements';
+import { Card, Button, Icon, List, ListItem, CheckBox } from 'react-native-elements';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 
 class PlacesScreen extends Component {
   static navigationOptions = {
-    title: 'Links',
+    title: 'Map',
+    tabBarIcon:  ({tintColor}) => {
+        return <Icon name="my-location" size={30} color={tintColor} />
+    }
   };
 
   componentDidMount() {
@@ -23,7 +26,11 @@ class PlacesScreen extends Component {
             roundAvatar
             avatar={{uri:item.icon}}
             key={i}
-            title={item.name}
+            title={<CheckBox
+                title={item.name}
+                onPress={this.press}
+                checked={false}
+              />}
             subtitle={this.getRating(item.rating)}
           />);
         })
