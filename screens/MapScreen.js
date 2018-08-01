@@ -77,11 +77,11 @@ class MapScreen extends Component {
         />
         <View style={styles.buttonContainer}>
           <TextInput
-                 style={{ height: 40, marginBottom: 10, width: '80%' }}
+                 style={{ height: 40, width: '80%' }}
                  onChangeText={(text) => this.setState({text})}
                  value={this.state.text}
                />
-          <Button large title="Search This Area" backgroundColor="#009688" icon={{ name: 'search' }} onPress={this.onPlacesButtonPress} style={{marginBottom: 10}} />
+          <Icon name="search" style={styles.icon} onPress={this.onPlacesButtonPress} />
         </View>
         <View>
           <DialogComponent
@@ -104,6 +104,8 @@ class MapScreen extends Component {
 
 const styles = {
   buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
     left: 0,

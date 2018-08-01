@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Card, Button, Icon, List, ListItem } from 'react-native-elements';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 
-class PlacesScreen extends React.Component {
+class PlacesScreen extends Component {
   static navigationOptions = {
     title: 'Links',
   };
@@ -14,17 +14,17 @@ class PlacesScreen extends React.Component {
   }
 
   renderPlaces() {
-    if(this.state.places){
+    if(this.props.places){
       return (
         <List containerStyle={{marginBottom: 20}}>
           {
-          this.state.places.map((item, i) => {
+          this.props.places.map((item, i) => {
           return (<ListItem
             roundAvatar
             avatar={{uri:item.icon}}
             key={i}
             title={item.name}
-            subtitle={item.rating}
+            subtitle={this.getRating(item.rating)}
           />);
         })
         }
@@ -33,6 +33,10 @@ class PlacesScreen extends React.Component {
     }else{
       // render empty message
     }
+ }
+
+ getRating(rating) {
+   return (rating > 0)?'Rating: '+rating+'/5':'No Rating';
  }
 
   render() {
@@ -53,7 +57,8 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps({ places }){
-  return { places: (places.places.candidates)?places.places.candidates:places.results };
+  const placesResults = (typeof(places.places.candidates) != 'undefined')?places.places.candidates:places.places.results;
+  return { places: placesResults };
 }
 
 export default connect(mapStateToProps, actions)(PlacesScreen);

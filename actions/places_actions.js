@@ -15,16 +15,21 @@ export const fetchPlaces = (region, query, callback) => async (dispatch) => {
     dispatch({ type: FETCH_PLACES, payload: data });
     callback();
   }catch(e){
+    // TODO: dispatch error
     console.log(e);
   }
 };
 
 const buildPlacesURL = (region, query, radius, type) => {
+  // set some defaults
   if(!radius){
     radius = 2000;
   }
   if(!type){
     type = 'search';
+  }
+  if(!query){
+    type = 'nearby';
   }
 
 
@@ -46,6 +51,15 @@ const buildPlacesURL = (region, query, radius, type) => {
       }};
       break;
 
+    case 'nearby':
+      urlSegment = 'nearbysearch';
+
+      params = { ...params, ...{
+        location: region.latitude+','+region.longitude,
+        radius: radius // TODO: add optional page param
+      }};
+      break;
+
     case 'search':
     default:
       urlSegment = 'textsearch';
@@ -56,6 +70,7 @@ const buildPlacesURL = (region, query, radius, type) => {
         location: region.latitude+','+region.longitude,
         radius: radius // TODO: add optional page param
       }};
+      break;
   }
 
 
