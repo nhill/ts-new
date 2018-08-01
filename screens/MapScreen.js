@@ -22,7 +22,8 @@ class MapScreen extends Component {
       longitudeDelta: 0.04,
       latitudeDelta: 0.09
     },
-    mapLoaded: false
+    mapLoaded: false,
+    loadingResults: false
   };
 
   componentDidMount() {
@@ -52,6 +53,8 @@ class MapScreen extends Component {
   }
 
   onPlacesButtonPress = () => {
+    this.setState({ loadingResults: true });
+
     this.props.fetchPlaces( this.state.region, this.state.text, () => {
       this.props.navigation.navigate('places');
     });
@@ -59,6 +62,27 @@ class MapScreen extends Component {
 
   onButtonPress = () => {
     this.dialogComponent.show();
+  }
+
+  renderSearch = () => {
+    if(this.state.loadingResults){
+      return (
+        <View style={styles.buttonContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }else{
+      return (
+        <View style={styles.buttonContainer}>
+          <TextInput
+                 style={{ height: 40, width: '80%' }}
+                 onChangeText={(text) => this.setState({text})}
+                 value={this.state.text}
+               />
+          <Icon name="search" style={styles.icon} onPress={this.onPlacesButtonPress} />
+        </View>
+      );
+    }
   }
 
   render() {
@@ -75,14 +99,7 @@ class MapScreen extends Component {
           onRegionChangeComplete={this.onRegionChangeComplete}
           style={{ flex:1 }}
         />
-        <View style={styles.buttonContainer}>
-          <TextInput
-                 style={{ height: 40, width: '80%' }}
-                 onChangeText={(text) => this.setState({text})}
-                 value={this.state.text}
-               />
-          <Icon name="search" style={styles.icon} onPress={this.onPlacesButtonPress} />
-        </View>
+        {this.renderSearch()}
         <View>
           <DialogComponent
             ref={(dialogComponent) => { this.dialogComponent = dialogComponent; }}
@@ -106,6 +123,7 @@ const styles = {
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
     position: 'absolute',
     bottom: 0,
     left: 0,
