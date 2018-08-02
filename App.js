@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { Provider } from 'react-redux';
@@ -8,6 +8,14 @@ import store from './store';
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+  };
+  static navigationOptions = {
+    headerLeft:() => {
+      return (<TouchableOpacity onPress={() => navigation.navigate("DrawerOpen")}>
+                    <Icon name="menu" size={30} />
+                  </TouchableOpacity>
+      )
+    },
   };
 
   render() {
