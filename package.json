@@ -16,18 +16,24 @@
     "@expo/samples": "2.1.1",
     "axios": "^0.18.0",
     "expo": "^28.0.0",
+    "firebase": "^5.3.1",
     "latlng-to-zip": "0.0.1",
     "lodash": "^4.17.10",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
     "react-native-dialog-component": "^0.2.17",
     "react-native-elements": "^0.19.1",
+    "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-native-modal": "^6.5.0",
     "react-native-popup-dialog": "^0.14.52",
+    "react-native-side-menu": "^1.1.3",
+    "react-native-ui-kitten": "^3.0.1",
     "react-navigation": "2.3.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-persist": "^5.10.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tcomb-form-native": "^0.6.15"
   },
   "devDependencies": {
     "jest-expo": "^28.0.0"

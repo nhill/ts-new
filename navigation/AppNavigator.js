@@ -1,42 +1,51 @@
 import React from 'react';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { Dimensions, TouchableOpacity, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { createStackNavigator, DrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
+import MapScreen from '../screens/MapScreen';
 import PlacesScreen from '../screens/PlacesScreen';
-import SideMenu from '../components/SideMenu';
+import LoginScreen from '../screens/LoginScreen';
 
-const sideNav = DrawerNavigator({
-  places: {
-      screen: PlacesScreen,
-    }
-  }, {
-    contentComponent: SideMenu,
-    drawerWidth: Dimensions.get('window').width - 120,
-});
-
-export default createStackNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-  sideNav: sideNav,
-  places: {
-    screen: PlacesScreen
-  }
+const LoginStack = createStackNavigator({
+  loginScreen: { screen: LoginScreen },
+  //signupScreen: { screen: SignupScreen },
+  //forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: 'Forgot Password' } }
 }, {
-  navigationOptions: ({navigation}) => ({
-      title: "Main",
-      headerStyle: {
-        backgroundColor: '#f4511e',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerLeft:(<TouchableOpacity onPress={() => navigation.navigate("sideNav")}>
-                      <Icon name="menu" size={30} />
-                    </TouchableOpacity>
-        ),
-    })
+  headerMode: 'float',
+  navigationOptions: {
+    headerStyle: {backgroundColor: '#E73536'},
+    title: 'You are not logged in',
+    headerTintColor: 'white'
+  }
 });
+
+const DrawerStack = createDrawerNavigator({
+  map: { screen: MapScreen },
+  places: { screen: PlacesScreen },
+})
+
+const DrawerNavigation = createStackNavigator({
+  DrawerStack: { screen: DrawerStack }
+}, {
+  headerMode: 'float',
+  navigationOptions: ({navigation}) => ({
+    headerStyle: {backgroundColor: '#4C3E54'},
+    title: 'Welcome!',
+    headerTintColor: 'white',
+    headerLeft: <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu</Text>
+  })
+});
+
+const PrimaryNav = createStackNavigator({
+  loginStack: { screen: LoginStack },
+  drawerStack: { screen: DrawerNavigation }
+}, {
+  // Default config for all screens
+  headerMode: 'none',
+  title: 'Main',
+  initialRouteName: 'loginStack'
+});
+
+export default PrimaryNav;
