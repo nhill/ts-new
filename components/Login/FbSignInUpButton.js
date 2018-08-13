@@ -32,15 +32,17 @@ class FbSignInUpButton extends Component {
           <RkText
             onPress={() => { this._pressSignInUp(); }}
             rkType='awesome hero accentColor'
-            style={{ fontFamily: 'fontawesome' }}>
-            {FontAwesome.facebook}
+            style={{ color: '#fff'}}>
+            Facebook
           </RkText>
         </RkButton>
         <GradientButton
           onPress={() => { this._pressSignInUp(); }}
           rkType='large'
           style={styles.fb}
-          text={this.props.fbBtnStr}>
+          text={this.props.fbBtnStr}
+          colors={['#4c669f', '#3b5998', '#192f6a']}
+        >
         </GradientButton>
       </View>
     );
