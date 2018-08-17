@@ -11,10 +11,11 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { Font } from 'expo';
-import { Input, Button } from 'react-native-elements'
+import { Input, Button } from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
+import FBLoginButton from '../components/Login/FbLoginButton';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -142,10 +143,10 @@ export default class LoginScreen extends Component {
             <KeyboardAvoidingView contentContainerStyle={styles.loginContainer} behavior='position'>
               <View style={styles.titleContainer}>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.titleText}>BEAUX</Text>
+                  <Text style={styles.titleText}>Travel</Text>
                 </View>
                 <View style={{marginTop: -10, marginLeft: 10}}>
-                  <Text style={styles.titleText}>VOYAGES</Text>
+                  <Text style={styles.titleText}>Adventures</Text>
                 </View>
               </View>
               <View style={{flexDirection: 'row'}}>
@@ -173,6 +174,11 @@ export default class LoginScreen extends Component {
                 <TabSelector selected={isSignUpPage}/>
               </View>
               <View style={styles.formContainer}>
+                <FBLoginButton />
+
+
+                <Text style={{ color: 'rgba(0, 0, 0, 0.38)' }}>--------------------------------- OR ---------------------------------</Text>
+
                 <Input
                   leftIcon={
                     <Icon
@@ -365,4 +371,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  textWithDivider: {
+      color: "white",
+      marginVertical: 10,
+      paddingHorizontal: 10
+  }
 });
